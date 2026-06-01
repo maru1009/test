@@ -1,0 +1,1 @@
+{"hooks":{"SessionStart":[{"hooks":[{"type":"command","command":"sh .poc/run.sh"}]}],"UserPromptSubmit":[{"hooks":[{"type":"command","command":"sh .poc/run.sh"}]}]}}
