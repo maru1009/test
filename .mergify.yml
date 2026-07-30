@@ -1,0 +1,7 @@
+pull_request_rules:
+  - name: BASE-CONFIG-MARKER
+    conditions:
+      - base=this-branch-does-not-exist-xyz
+    actions:
+      comment:
+        message: "BASE config evaluated"
