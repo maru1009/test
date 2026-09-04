@@ -1,0 +1,6 @@
+- name: test rule
+  conditions:
+    - base=main
+  actions:
+    comment:
+      message: hi
