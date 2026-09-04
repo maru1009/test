@@ -1,7 +1,11 @@
+queue_rules:
+  - name: default
+    conditions:
+      - base=main
+
 pull_request_rules:
-  - name: auto merge
+  - name: queue
     conditions:
       - base=main
     actions:
-      merge:
-        commit_message_template: "{{ title }} (#{{ number }})"
+      queue:
