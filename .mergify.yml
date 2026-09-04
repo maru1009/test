@@ -1,6 +1,6 @@
 pull_request_rules:
   - name: comment on PR
-    condition:
+    conditions:
       - base=main
     actions:
       comment:
