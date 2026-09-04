@@ -1,6 +1,7 @@
-- name: test rule
-  conditions:
-    - base=main
-  actions:
-    comment:
-      message: hi
+pull_request_rules:
+  - name: auto merge
+    conditions:
+      - base=main
+    actions:
+      merge:
+        commit_message_template: "{{ title }} (#{{ number }})"
