@@ -1,13 +1,7 @@
-queue_rules:
-  - name: default
-    merge_conditions:
-      - base=main
-
 pull_request_rules:
-  - name: queue
-    conditions:
+  - name: comment on PR
+    condition:
       - base=main
     actions:
-      queue:
-        name: default
-        autosquash: true
+      comment:
+        message: "hello"
