@@ -13,7 +13,7 @@ scopes:
   default_capacity: 4
 queue_rules:
   - name: default
-    conditions:
+    merge_conditions:
       - files~=^(src|app|barrier)/
       - check-success=race
 pull_request_rules:
