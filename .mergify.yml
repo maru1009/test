@@ -1,17 +1,20 @@
 merge_queue:
-  mode: isolated
+  mode: parallel
+  max_parallel_checks: 4
 scopes:
   source:
     files:
-      be:
-        include: ["barrier/**"]
+      src:
+        include: ["src/**"]
+      app:
+        include: ["app/**"]
   barrier_files:
     include: ["barrier/**"]
-  default_capacity: 2
+  default_capacity: 4
 queue_rules:
   - name: default
     conditions:
-      - files~=^(src|app)/
+      - files~=^(src|app|barrier)/
 pull_request_rules:
   - name: queue on label
     conditions:
@@ -19,9 +22,3 @@ pull_request_rules:
     actions:
       queue:
         name: default
-  - name: scope probe
-    conditions:
-      - scope = be
-    actions:
-      comment:
-        message: "SIM: be scope matched"
