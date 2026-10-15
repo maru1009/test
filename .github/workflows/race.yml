@@ -1,0 +1,15 @@
+name: race
+on:
+  pull_request:
+jobs:
+  race:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: race check
+        run: |
+          if [ -f src/q_race_test.py ]; then
+            python3 src/q_race_test.py
+          else
+            echo "no test file present"
+          fi
