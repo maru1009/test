@@ -1,0 +1,11 @@
+queue_rules:
+  - name: default
+    conditions:
+      - files~=^(src|app)/
+pull_request_rules:
+  - name: queue on label
+    conditions:
+      - label=queue-me
+    actions:
+      queue:
+        name: default
