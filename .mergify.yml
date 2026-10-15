@@ -13,7 +13,7 @@ scopes:
   default_capacity: 4
 queue_rules:
   - name: default
-    conditions:
+    merge_conditions:
       - files~=^(src|app|barrier)/
 pull_request_rules:
   - name: queue on label
