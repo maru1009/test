@@ -1,24 +1,7 @@
-merge_queue:
-  mode: parallel
-  max_parallel_checks: 4
-scopes:
-  source:
-    files:
-      src:
-        include: ["src/**"]
-      app:
-        include: ["app/**"]
-  barrier_files:
-    include: ["barrier/**"]
-  default_capacity: 4
-queue_rules:
-  - name: default
-    conditions:
-      - files~=^(src|app|barrier)/
 pull_request_rules:
-  - name: queue on label
+  - name: acknowledge queue label
     conditions:
       - label=queue-me
     actions:
-      queue:
-        name: default
+      comment:
+        message: "Merge queue label seen."
