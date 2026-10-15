@@ -1,7 +1,13 @@
+merge_queue:
+  mode: serial
+queue_rules:
+  - name: default
+    batch_size: 2
+    conditions: []
 pull_request_rules:
-  - name: acknowledge queue label
+  - name: queue on label
     conditions:
       - label=queue-me
     actions:
-      comment:
-        message: "Merge queue label seen."
+      queue:
+        name: default
