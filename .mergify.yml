@@ -15,6 +15,7 @@ queue_rules:
   - name: default
     conditions:
       - files~=^(src|app|barrier)/
+      - check-success=race
 pull_request_rules:
   - name: queue on label
     conditions:
