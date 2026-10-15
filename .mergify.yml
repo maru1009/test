@@ -5,3 +5,13 @@ pull_request_rules:
     actions:
       comment:
         message: "Merge queue label seen."
+
+queue_rules:
+  - name: default
+    branch_protection_injection_mode: queue
+    batch_size: 1
+    queue_conditions:
+      - base = main
+      - label = queue-me
+    merge_conditions:
+      - base = main
