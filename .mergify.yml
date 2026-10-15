@@ -1,3 +1,13 @@
+merge_queue:
+  mode: isolated
+scopes:
+  source:
+    files:
+      be:
+        include: ["barrier/**"]
+  barrier_files:
+    include: ["barrier/**"]
+  default_capacity: 2
 queue_rules:
   - name: default
     conditions:
@@ -9,3 +19,9 @@ pull_request_rules:
     actions:
       queue:
         name: default
+  - name: scope probe
+    conditions:
+      - scope = be
+    actions:
+      comment:
+        message: "SIM: be scope matched"
