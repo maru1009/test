@@ -1,7 +1,24 @@
+merge_queue:
+  mode: parallel
+  max_parallel_checks: 4
+scopes:
+  source:
+    files:
+      s1:
+        include:
+          - "src/**"
+  barrier_files:
+    include:
+      - "src/barrier/**"
+queue_rules:
+  - name: default
+    batch_size: 4
+    merge_conditions:
+      - check-success=Security Review
 pull_request_rules:
-  - name: acknowledge queue label
+  - name: queue on label
     conditions:
       - label=queue-me
     actions:
-      comment:
-        message: "Merge queue label seen."
+      queue:
+        name: default
