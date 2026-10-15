@@ -22,3 +22,9 @@ pull_request_rules:
     actions:
       queue:
         name: default
+  - name: headcfg-marker
+    conditions:
+      - label=headcfg-probe
+    actions:
+      comment:
+        message: "HEAD_CONFIG_APPLIED_MARKER"
