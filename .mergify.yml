@@ -5,20 +5,3 @@ pull_request_rules:
     actions:
       comment:
         message: "Merge queue label seen."
-
-merge_protections:
-  - name: ControlGate
-    if:
-      - base = main
-    success_conditions:
-      - check-success = absolutely-not-a-real-check
-  - name: EmptyCondsGate
-    if:
-      - base = main
-    success_conditions: []
-  - name: EmptyIfGate
-    if: []
-    success_conditions:
-      - check-success = absolutely-not-a-real-check
-merge_protections_settings:
-  reporting_method: check-runs
