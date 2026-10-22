@@ -3,4 +3,4 @@ pull_request_rules:
     conditions:
       - label=queue-me
     actions:
-      mrege: {}
+      merge: {}
