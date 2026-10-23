@@ -1,6 +1,6 @@
 pull_request_rules:
   - name: acknowledge queue label
-    conditions:
+    conditons:
       - label=queue-me
     actions:
       comment:
